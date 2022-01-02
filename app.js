@@ -133,6 +133,15 @@ app.post('/menuItem',(req,res) => {
     
 })
 
+app.get('/cart',(req,res) => {
+    console.log(req.body);
+    db.collection('menu').find({menu_id:{$in:req.body}}).toArray((err,result) => {
+        if(err) throw err;
+        res.send(result)
+    })
+    
+})
+
 app.put('/updateStatus/:id',(req,res) => {
     var id = Number(req.params.id);
     var status = req.body.status?req.body.status:"Pending"
