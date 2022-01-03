@@ -135,11 +135,18 @@ app.post('/menuItem',(req,res) => {
 
 app.get('/cart',(req,res) => {
     console.log(req.body);
-    db.collection('menu').find({menu_id:{$in:req.body}}).toArray((err,result) => {
+    var id=req.query.mealId;
+    var menuIds=[];
+    if(id.includes(',')){
+    menuIds=((id.split(',')));
+    menuIds=menuIds.map((item) => Number(item)) 
+    }else{
+        menuIds.push(Number(id));
+    }
+    db.collection('menu').find({menu_id:{$in:menuIds}}).toArray((err,result) => {
         if(err) throw err;
         res.send(result)
     })
-    
 })
 
 app.put('/updateStatus/:id',(req,res) => {
