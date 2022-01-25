@@ -170,12 +170,12 @@ app.put('/updateStatus/:id',(req,res) => {
 app.get('/orders',(req,res) => {
     var email=req.query.email;
     if(email){
-    db.collection('orders').find().toArray((err,result) => {
+    db.collection('orders').find({email:email}).toArray((err,result) => {
         if(err) throw err;
         res.send(result)
     })
     }else{
-         db.collection('orders').find({email:email}).toArray((err,result) => {
+         db.collection('orders').find().toArray((err,result) => {
         if(err) throw err;
         res.send(result)
     })
